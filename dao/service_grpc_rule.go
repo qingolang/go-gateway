@@ -34,6 +34,11 @@ func (t *GRPCRule) Save(c *gin.Context, tx *gorm.DB) error {
 	return nil
 }
 
+// Del
+func (t *GRPCRule) Del(c *gin.Context, tx *gorm.DB) error {
+	return tx.SetCtx(common.GetGinTraceContext(c)).Exec("DELETE FROM "+t.TableName()+" WHERE `service_id` = ? ", t.ServiceID).Error
+}
+
 // ListByServiceID
 func (t *GRPCRule) ListByServiceID(c *gin.Context, tx *gorm.DB, serviceID int64) ([]GRPCRule, int64, error) {
 	var list []GRPCRule

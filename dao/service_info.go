@@ -113,3 +113,8 @@ func (t *ServiceInfo) Find(c *gin.Context, tx *gorm.DB, search *ServiceInfo) (*S
 func (t *ServiceInfo) Save(c *gin.Context, tx *gorm.DB) error {
 	return tx.SetCtx(common.GetGinTraceContext(c)).Save(t).Error
 }
+
+// Del
+func (t *ServiceInfo) Del(c *gin.Context, tx *gorm.DB) error {
+	return tx.SetCtx(common.GetGinTraceContext(c)).Exec("DELETE FROM "+t.TableName()+" WHERE `id` = ? ", t.ID).Error
+}

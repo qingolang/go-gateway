@@ -34,6 +34,11 @@ func (t *TcpRule) Save(c *gin.Context, tx *gorm.DB) error {
 	return nil
 }
 
+// Del
+func (t *TcpRule) Del(c *gin.Context, tx *gorm.DB) error {
+	return tx.SetCtx(common.GetGinTraceContext(c)).Exec("DELETE FROM "+t.TableName()+" WHERE `service_id` = ? ", t.ServiceID).Error
+}
+
 // ListByServiceID
 func (t *TcpRule) ListByServiceID(c *gin.Context, tx *gorm.DB, serviceID int64) ([]TcpRule, int64, error) {
 	var list []TcpRule

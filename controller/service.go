@@ -147,18 +147,57 @@ func (service *ServiceController) ServiceDelete(c *gin.Context) {
 		return
 	}
 
+	tx = tx.Begin()
+
 	//读取基本信息
 	serviceInfo := &dao.ServiceInfo{ID: params.ID}
 	serviceInfo, err = serviceInfo.Find(c, tx, serviceInfo)
 	if err != nil {
+		tx.Rollback()
 		middleware.ResponseError(c, 2002, err)
 		return
 	}
-	serviceInfo.IsDelete = 1
-	if err := serviceInfo.Save(c, tx); err != nil {
+	if err := serviceInfo.Del(c, tx); err != nil {
+		tx.Rollback()
 		middleware.ResponseError(c, 2003, err)
 		return
 	}
+	// gateway_service_access_control
+	accessControl := &dao.AccessControl{ServiceID: serviceInfo.ID}
+	if err := accessControl.Del(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2004, err)
+		return
+	}
+	// gateway_service_grpc_rule
+	grpcRule := &dao.GRPCRule{ServiceID: serviceInfo.ID}
+	if err := grpcRule.Del(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2005, err)
+		return
+	}
+	// gateway_service_load_balance
+	loadBalance := &dao.LoadBalance{ServiceID: serviceInfo.ID}
+	if err := loadBalance.Del(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2006, err)
+		return
+	}
+	// gateway_service_tcp_rule
+	tcpRule := &dao.TcpRule{ServiceID: serviceInfo.ID}
+	if err := tcpRule.Del(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2007, err)
+		return
+	}
+	// gateway_service_http_rule
+	httpRule := &dao.HTTPRule{ServiceID: serviceInfo.ID}
+	if err := httpRule.Del(c, tx); err != nil {
+		tx.Rollback()
+		middleware.ResponseError(c, 2008, err)
+		return
+	}
+	tx.Commit()
 	middleware.ResponseSuccess(c, "")
 }
 

@@ -39,6 +39,11 @@ func (t *AccessControl) Save(c *gin.Context, tx *gorm.DB) error {
 	return nil
 }
 
+// Del
+func (t *AccessControl) Del(c *gin.Context, tx *gorm.DB) error {
+	return tx.SetCtx(common.GetGinTraceContext(c)).Exec("DELETE FROM "+t.TableName()+" WHERE `service_id` = ? ", t.ServiceID).Error
+}
+
 // ListBYServiceID
 func (t *AccessControl) ListBYServiceID(c *gin.Context, tx *gorm.DB, serviceID int64) ([]AccessControl, int64, error) {
 	var list []AccessControl

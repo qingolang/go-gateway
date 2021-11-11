@@ -11,6 +11,7 @@ import (
 // CaptchaController
 type CaptchaController struct{}
 
+// CaptchaRegister
 func CaptchaRegister(group *gin.RouterGroup) {
 	Captacha := &CaptchaController{}
 	group.GET("/get", Captacha.Captacha)

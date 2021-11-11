@@ -40,6 +40,11 @@ func (t *HTTPRule) Save(c *gin.Context, tx *gorm.DB) error {
 	return nil
 }
 
+// Del
+func (t *HTTPRule) Del(c *gin.Context, tx *gorm.DB) error {
+	return tx.SetCtx(common.GetGinTraceContext(c)).Exec("DELETE FROM "+t.TableName()+" WHERE `service_id` = ? ", t.ServiceID).Error
+}
+
 // ListByServiceID
 func (t *HTTPRule) ListByServiceID(c *gin.Context, tx *gorm.DB, serviceID int64) ([]HTTPRule, int64, error) {
 	var list []HTTPRule

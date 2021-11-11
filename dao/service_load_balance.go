@@ -44,6 +44,11 @@ func (t *LoadBalance) Find(c *gin.Context, tx *gorm.DB, search *LoadBalance) (*L
 	return model, err
 }
 
+// Del
+func (t *LoadBalance) Del(c *gin.Context, tx *gorm.DB) error {
+	return tx.SetCtx(common.GetGinTraceContext(c)).Exec("DELETE FROM "+t.TableName()+" WHERE `service_id` = ? ", t.ServiceID).Error
+}
+
 // Save
 func (t *LoadBalance) Save(c *gin.Context, tx *gorm.DB) error {
 	if err := tx.SetCtx(common.GetGinTraceContext(c)).Save(t).Error; err != nil {
