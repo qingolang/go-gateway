@@ -13,18 +13,18 @@ import (
 // NewGrpcLoadBalanceHandler GRPC策略
 func NewGrpcLoadBalanceHandler(lb load_balance.LoadBalance) grpc.StreamHandler {
 	return func() grpc.StreamHandler {
-		nextAddr, err := lb.Get("")
-		if err != nil {
-			log.Fatal("get next addr fail")
-		}
+
 		director := func(ctx context.Context, fullMethodName string) (context.Context, *grpc.ClientConn, error) {
+			nextAddr, err := lb.Get("")
+			if err != nil {
+				log.Fatal("get next addr fail")
+			}
 			c, err := grpc.DialContext(ctx, nextAddr, grpc.WithCodec(proxy.Codec()), grpc.WithInsecure())
 			if err != nil {
 				return nil, nil, err
 			}
 			md, _ := metadata.FromIncomingContext(ctx)
 			outCtx, _ := context.WithCancel(ctx)
-			//defer cancel()
 			outCtx = metadata.NewOutgoingContext(outCtx, md.Copy())
 			return outCtx, c, err
 		}
