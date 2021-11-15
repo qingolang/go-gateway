@@ -12,8 +12,6 @@ import (
 
 var tcpServerList = []*tcp_server.TcpServer{}
 
-type TCPContextKey string
-
 // TcpServerRun
 func TcpServerRun() {
 	// 获取服务列表
@@ -49,7 +47,7 @@ func TcpServerRun() {
 					return reverse_proxy.NewTcpLoadBalanceReverseProxy(c, rb)
 				}, router)
 
-			baseCtx := context.WithValue(context.Background(), TCPContextKey("service"), serviceDetail)
+			baseCtx := context.WithValue(context.Background(), "service", serviceDetail)
 			tcpServer := &tcp_server.TcpServer{
 				Addr:    addr,
 				Handler: routerHandler,
