@@ -16,6 +16,10 @@ func GRPCJWTAuthTokenMiddleware(serviceDetail *dao.ServiceDetail) func(srv inter
 	return func(srv interface{}, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
 		// 是否开启鉴权
 		if serviceDetail.AccessControl.OpenAuth != 1 {
+			if err := handler(srv, ss); err != nil {
+				log.Printf("[ERROR] GrpcJwtAuthTokenMiddleware failed with error %v\n", err)
+				return err
+			}
 			return nil
 		}
 		// 取出令牌
