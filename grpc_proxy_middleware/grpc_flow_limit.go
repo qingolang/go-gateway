@@ -49,7 +49,7 @@ func GRPCFlowLimitMiddleware(serviceDetail *dao.ServiceDetail) func(srv interfac
 			}
 		}
 		if err := handler(srv, ss); err != nil {
-			log.Printf("[ERROR] GrpcFlowLimitMiddleware failed with error %v\n", err)
+			log.Printf(" [ERROR] GrpcFlowLimitMiddleware failed with error %v\n", err)
 			return err
 		}
 		return nil

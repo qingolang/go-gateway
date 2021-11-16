@@ -17,7 +17,7 @@ func GRPCJWTAuthTokenMiddleware(serviceDetail *dao.ServiceDetail) func(srv inter
 		// 是否开启鉴权
 		if serviceDetail.AccessControl.OpenAuth != 1 {
 			if err := handler(srv, ss); err != nil {
-				log.Printf("[ERROR] GrpcJwtAuthTokenMiddleware failed with error %v\n", err)
+				log.Printf(" [ERROR] GrpcJwtAuthTokenMiddleware failed with error %v\n", err)
 				return err
 			}
 			return nil
@@ -55,7 +55,7 @@ func GRPCJWTAuthTokenMiddleware(serviceDetail *dao.ServiceDetail) func(srv inter
 			return errors.New("not match valid app")
 		}
 		if err := handler(srv, ss); err != nil {
-			log.Printf("[ERROR] GrpcJwtAuthTokenMiddleware failed with error %v\n", err)
+			log.Printf(" [ERROR] GrpcJwtAuthTokenMiddleware failed with error %v\n", err)
 			return err
 		}
 		return nil

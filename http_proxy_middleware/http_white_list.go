@@ -22,17 +22,14 @@ func HTTPWhiteListMiddleware() gin.HandlerFunc {
 		}
 		serviceDetail := serverInterface.(*dao.ServiceDetail)
 		// 是否开启校验
-		if serviceDetail.AccessControl.OpenAuth != 1 {
+		if serviceDetail.AccessControl.OpenWhiteList != 1 {
 			c.Next()
 			return
 		}
 
-		iplist := []string{}
+		// 校验白名单
 		if serviceDetail.AccessControl.WhiteList != "" {
-			iplist = strings.Split(serviceDetail.AccessControl.WhiteList, ",")
-		}
-		if len(iplist) > 0 {
-			if !common.InStringSlice(iplist, c.ClientIP()) {
+			if !common.InStringSlice(strings.Split(serviceDetail.AccessControl.WhiteList, ","), c.ClientIP()) {
 				middleware.ResponseError(c, 3001, errors.New(fmt.Sprintf("%s not in white ip list", c.ClientIP())))
 				c.Abort()
 				return

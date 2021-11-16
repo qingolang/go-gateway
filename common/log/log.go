@@ -142,7 +142,7 @@ func (l *Logger) Close() {
 	for _, w := range l.writers {
 		if f, ok := w.(Flusher); ok {
 			if err := f.Flush(); err != nil {
-				log.Printf("[ERROR] Log close :%v\n", err)
+				log.Printf(" [ERROR] Log close :%v\n", err)
 			}
 		}
 	}
@@ -201,7 +201,7 @@ func boostrapLogWriter(logger *Logger) {
 
 	for _, w := range logger.writers {
 		if err := w.Write(r); err != nil {
-			log.Printf("[ERROR] logger.writers : %v\n", err)
+			log.Printf(" [ERROR] logger.writers : %v\n", err)
 		}
 	}
 
@@ -217,7 +217,7 @@ func boostrapLogWriter(logger *Logger) {
 			}
 			for _, w := range logger.writers {
 				if err := w.Write(r); err != nil {
-					log.Printf("[ERROR] logger.writers : %v\n", err)
+					log.Printf(" [ERROR] logger.writers : %v\n", err)
 				}
 			}
 
@@ -227,7 +227,7 @@ func boostrapLogWriter(logger *Logger) {
 			for _, w := range logger.writers {
 				if f, ok := w.(Flusher); ok {
 					if err := f.Flush(); err != nil {
-						log.Printf("[ERROR] logger.writers : %v\n", err)
+						log.Printf(" [ERROR] logger.writers : %v\n", err)
 					}
 				}
 			}
@@ -237,7 +237,7 @@ func boostrapLogWriter(logger *Logger) {
 			for _, w := range logger.writers {
 				if r, ok := w.(Rotater); ok {
 					if err := r.Rotate(); err != nil {
-						log.Printf("[ERROR] logger.Rotater : %v\n", err)
+						log.Printf(" [ERROR] logger.Rotater : %v\n", err)
 					}
 				}
 			}

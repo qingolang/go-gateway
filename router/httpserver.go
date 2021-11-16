@@ -28,7 +28,7 @@ func HTTPServerRun() {
 		MaxHeaderBytes: 1 << uint(lib.GetIntConf("base.http.max_header_bytes")),
 	}
 	go func() {
-		log.Printf("[INFO] HTTPServerRun:%s\n", lib.GetStringConf("base.http.addr"))
+		log.Printf(" [INFO] HTTPServerRun:%s\n", lib.GetStringConf("base.http.addr"))
 		if err := HTTPSrvHandler.ListenAndServe(); err != nil {
 			log.Fatalf(" [ERROR] HTTPServerRun:%s err:%v\n", lib.GetStringConf("base.http.addr"), err)
 		}
@@ -42,5 +42,5 @@ func HTTPServerStop() {
 	if err := HTTPSrvHandler.Shutdown(ctx); err != nil {
 		log.Fatalf(" [ERROR] HTTPServerStop err:%v\n", err)
 	}
-	log.Printf("[INFO] HTTPServerStop stopped\n")
+	log.Printf(" [INFO] HTTPServerStop stopped\n")
 }

@@ -28,9 +28,9 @@ func HttpServerRun() {
 		WriteTimeout:   time.Duration(lib.GetIntConf("proxy.http.write_timeout")) * time.Second,
 		MaxHeaderBytes: 1 << uint(lib.GetIntConf("proxy.http.max_header_bytes")),
 	}
-	log.Printf("[INFO]  http_proxy_run %s\n", lib.GetStringConf("proxy.http.addr"))
+	log.Printf(" [INFO] http_proxy_run %s\n", lib.GetStringConf("proxy.http.addr"))
 	if err := HttpSrvHandler.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("[ERROR]  http_proxy_run %s err:%v\n", lib.GetStringConf("proxy.http.addr"), err)
+		log.Fatalf(" [ERROR] http_proxy_run %s err:%v\n", lib.GetStringConf("proxy.http.addr"), err)
 	}
 }
 
@@ -46,7 +46,7 @@ func HttpsServerRun() {
 		WriteTimeout:   time.Duration(lib.GetIntConf("proxy.https.write_timeout")) * time.Second,
 		MaxHeaderBytes: 1 << uint(lib.GetIntConf("proxy.https.max_header_bytes")),
 	}
-	log.Printf("[INFO] https_proxy_run %s\n", lib.GetStringConf("proxy.https.addr"))
+	log.Printf(" [INFO] https_proxy_run %s\n", lib.GetStringConf("proxy.https.addr"))
 	// todo 以下命令只在编译机有效，如果是交叉编译情况下需要单独设置路径
 	//if err := HttpsSrvHandler.ListenAndServeTLS(cert_file.Path("server.crt"), cert_file.Path("server.key")); err != nil && err!=http.ErrServerClosed {
 	if err := HttpsSrvHandler.ListenAndServeTLS(lib.GetStringConf("proxy.https.cert_file_crt"),
@@ -60,10 +60,10 @@ func HttpsServerRun() {
 func HttpServerStop() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	if err := HttpSrvHandler.Shutdown(ctx); err != nil {
-		log.Printf("[ERROR] http_proxy_stop err:%v\n", err)
+		log.Printf(" [ERROR] http_proxy_stop err:%v\n", err)
 	}
 	cancel()
-	log.Printf("[INFO] http_proxy_stop %v stopped\n", lib.GetStringConf("proxy.http.addr"))
+	log.Printf(" [INFO] http_proxy_stop %v stopped\n", lib.GetStringConf("proxy.http.addr"))
 }
 
 // HttpsServerStop
@@ -73,5 +73,5 @@ func HttpsServerStop() {
 		log.Fatalf(" [ERROR] https_proxy_stop err:%v\n", err)
 	}
 	cancel()
-	log.Printf("[INFO] https_proxy_stop %v stopped\n", lib.GetStringConf("proxy.https.addr"))
+	log.Printf(" [INFO] https_proxy_stop %v stopped\n", lib.GetStringConf("proxy.https.addr"))
 }

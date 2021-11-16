@@ -98,7 +98,7 @@ func (dp *TcpReverseProxy) onDialError() func(src net.Conn, dstDialErr error) {
 		return dp.OnDialError
 	}
 	return func(src net.Conn, dstDialErr error) {
-		log.Printf("[ERROR] tcpproxy: for incoming conn %v, error dialing %q: %v", src.RemoteAddr().String(), dp.Addr, dstDialErr)
+		log.Printf(" [ERROR] tcpproxy: for incoming conn %v, error dialing %q: %v", src.RemoteAddr().String(), dp.Addr, dstDialErr)
 		src.Close()
 	}
 }
@@ -107,6 +107,6 @@ func (dp *TcpReverseProxy) onDialError() func(src net.Conn, dstDialErr error) {
 func (dp *TcpReverseProxy) proxyCopy(dst, src net.Conn) {
 	_, err := io.Copy(dst, src)
 	if err != nil {
-		log.Printf("[ERROR] tcpproxy: for proxyCopy %v, error  %q: %v", src.RemoteAddr().String(), dp.Addr, err)
+		log.Printf(" [ERROR] tcpproxy: for proxyCopy %v, error  %q: %v", src.RemoteAddr().String(), dp.Addr, err)
 	}
 }

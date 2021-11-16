@@ -70,7 +70,7 @@ func GrpcServerRun() {
 				Addr:   addr,
 				Server: s,
 			})
-			log.Printf("[INFO] grpc_proxy_run %v\n", addr)
+			log.Printf(" [INFO] grpc_proxy_run %v\n", addr)
 			if err := s.Serve(lis); err != nil {
 				log.Fatalf(" [INFO] grpc_proxy_run %v err:%v\n", addr, err)
 			}
@@ -82,6 +82,6 @@ func GrpcServerRun() {
 func GRPCServerStop() {
 	for _, grpcServer := range grpcServerList {
 		grpcServer.GracefulStop()
-		log.Printf("[INFO] grpc_proxy_stop %v stopped\n", grpcServer.Addr)
+		log.Printf(" [INFO] grpc_proxy_stop %v stopped\n", grpcServer.Addr)
 	}
 }

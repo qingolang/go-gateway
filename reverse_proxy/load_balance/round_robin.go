@@ -50,7 +50,7 @@ func (r *RoundRobinBalance) SetConf(conf LoadBalanceConf) {
 // Update
 func (r *RoundRobinBalance) Update() {
 	if conf, ok := r.conf.(*LoadBalanceCheckConf); ok {
-		log.Printf("[INFO] Update get check conf:%v\n", conf.GetConf())
+		log.Printf(" [INFO] Update get check conf:%v\n", conf.GetConf())
 		r.rss = nil
 		for _, ip := range conf.GetConf() {
 			r.Add(strings.Split(ip, ",")...)

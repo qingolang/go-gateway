@@ -24,7 +24,7 @@ func GRPCJWTFlowLimitMiddleware(serviceDetail *dao.ServiceDetail) func(srv inter
 		appInfos := md.Get("app")
 		if len(appInfos) == 0 {
 			if err := handler(srv, ss); err != nil {
-				log.Printf("[ERROR] RPC failed with error %v\n", err)
+				log.Printf(" [ERROR] RPC failed with error %v\n", err)
 				return err
 			}
 			return nil
@@ -53,7 +53,7 @@ func GRPCJWTFlowLimitMiddleware(serviceDetail *dao.ServiceDetail) func(srv inter
 			}
 		}
 		if err := handler(srv, ss); err != nil {
-			log.Printf("[ERROR] RPC failed with error %v\n", err)
+			log.Printf(" [ERROR] RPC failed with error %v\n", err)
 			return err
 		}
 		return nil

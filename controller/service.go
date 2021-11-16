@@ -212,6 +212,7 @@ func (service *ServiceController) ServiceDelete(c *gin.Context) {
 // @Success 200 {object} middleware.Response{data=dao.ServiceDetail} "success"
 // @Router /service/service_detail [get]
 func (service *ServiceController) ServiceDetail(c *gin.Context) {
+
 	params := &dto.ServiceDeleteInput{}
 	if err := params.BindValidParam(c); err != nil {
 		middleware.ResponseError(c, 2000, err)

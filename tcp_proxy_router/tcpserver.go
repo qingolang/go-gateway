@@ -54,7 +54,7 @@ func TcpServerRun() {
 				BaseCtx: baseCtx,
 			}
 			tcpServerList = append(tcpServerList, tcpServer)
-			log.Printf("[INFO] tcp_proxy_run %v\n", addr)
+			log.Printf(" [INFO] tcp_proxy_run %v\n", addr)
 			if err := tcpServer.ListenAndServe(); err != nil && err != tcp_server.ErrServerClosed {
 				log.Fatalf(" [INFO] tcp_proxy_run %v err:%v\n", addr, err)
 			}
@@ -65,6 +65,6 @@ func TcpServerRun() {
 func TcpServerStop() {
 	for _, tcpServer := range tcpServerList {
 		tcpServer.Close()
-		log.Printf("[INFO] tcp_proxy_stop %v stopped\n", tcpServer.Addr)
+		log.Printf(" [INFO] tcp_proxy_stop %v stopped\n", tcpServer.Addr)
 	}
 }

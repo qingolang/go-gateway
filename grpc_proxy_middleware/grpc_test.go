@@ -11,7 +11,7 @@ func GRPCAuthStreamInterceptor(srv interface{}, ss grpc.ServerStream, info *grpc
 	//md, ok := metadata.FromIncomingContext(ss.Context())
 	err := handler(srv, ss)
 	if err != nil {
-		log.Printf("[ERROR] RPC failed with error %v\n", err)
+		log.Printf(" [ERROR] RPC failed with error %v\n", err)
 	}
 	return err
 }

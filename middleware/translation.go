@@ -102,7 +102,7 @@ func TranslationMiddleware() gin.HandlerFunc {
 				return true
 			})
 			val.RegisterValidation("valid_weightlist", func(fl validator.FieldLevel) bool {
-				log.Printf("[INFO] %s\n", fl.Field().String())
+				log.Printf(" [INFO] %s\n", fl.Field().String())
 				for _, ms := range strings.Split(fl.Field().String(), ",") {
 					if matched, _ := regexp.Match(`^\d+$`, []byte(ms)); !matched {
 						return false

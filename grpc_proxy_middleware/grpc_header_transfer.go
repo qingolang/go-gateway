@@ -33,7 +33,7 @@ func GRPCHeaderTransferMiddleware(serviceDetail *dao.ServiceDetail) func(srv int
 			return errors.WithMessage(err, "SetHeader")
 		}
 		if err := handler(srv, ss); err != nil {
-			log.Printf("[ERROR] RPC failed with error %v\n", err)
+			log.Printf(" [ERROR] RPC failed with error %v\n", err)
 			return err
 		}
 		return nil

@@ -22,26 +22,24 @@ func HTTPBlackListMiddleware() gin.HandlerFunc {
 		}
 		serviceDetail := serverInterface.(*dao.ServiceDetail)
 		// 是否开启校验
-		if serviceDetail.AccessControl.OpenAuth != 1 {
-			c.Next()
-			return
-		}
-		whileIpList := []string{}
-		if serviceDetail.AccessControl.WhiteList != "" {
-			whileIpList = strings.Split(serviceDetail.AccessControl.WhiteList, ",")
-		}
-		// 如果白名单不为空则不校验黑名单
-		if len(whileIpList) != 0 {
+		if serviceDetail.AccessControl.OpenBlackList != 1 {
 			c.Next()
 			return
 		}
 
-		blackIpList := []string{}
-		if serviceDetail.AccessControl.BlackList != "" {
-			blackIpList = strings.Split(serviceDetail.AccessControl.BlackList, ",")
+		// 如果存在与白名单则不校验黑名单
+		if serviceDetail.AccessControl.WhiteList != "" {
+			for _, whileIp := range strings.Split(serviceDetail.AccessControl.WhiteList, ",") {
+				if whileIp == c.ClientIP() {
+					c.Next()
+					return
+				}
+			}
 		}
-		if len(blackIpList) > 0 {
-			if common.InStringSlice(blackIpList, c.ClientIP()) {
+
+		// 校验黑名单
+		if serviceDetail.AccessControl.BlackList != "" {
+			if common.InStringSlice(strings.Split(serviceDetail.AccessControl.BlackList, ","), c.ClientIP()) {
 				middleware.ResponseError(c, 3001, errors.New(fmt.Sprintf("%s in black ip list", c.ClientIP())))
 				c.Abort()
 				return

@@ -25,6 +25,31 @@ func HTTPJWTAuthTokenMiddleware() gin.HandlerFunc {
 			c.Next()
 			return
 		}
+
+		// 是否开启API白名单
+		if serviceDetail.AccessControl.OpenApiWhiteList == 1 {
+			if serviceDetail.AccessControl.ApiWhiteList != "" {
+				aptWhiteList := strings.Split(serviceDetail.AccessControl.ApiWhiteList, ",")
+				for _, aptWhite := range aptWhiteList {
+					if aptWhite == "" {
+						continue
+					}
+					aptWhiteRuneList := []rune(aptWhite)
+					if aptWhiteRuneList[len(aptWhiteRuneList)-1] == '*' {
+						if strings.HasPrefix(c.Request.URL.Path, strings.TrimSuffix(aptWhite, "*")) {
+							c.Next()
+							return
+						}
+					} else {
+						if c.Request.URL.Path == aptWhite {
+							c.Next()
+							return
+						}
+					}
+				}
+			}
+		}
+
 		// decode jwt token
 		// app_id 与  app_list 取得 appInfo
 		// appInfo 放到 gin.context

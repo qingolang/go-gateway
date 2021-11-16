@@ -25,7 +25,7 @@ func InitDBPool(path string) error {
 		return err
 	}
 	if len(DbConfMap.List) == 0 {
-		log.Printf("[INFO] %s%s\n", time.Now().Format(TimeFormat), " empty mysql config.")
+		log.Printf(" [INFO] %s%s\n", time.Now().Format(TimeFormat), " empty mysql config.")
 	}
 
 	DBMapPool = map[string]*sql.DB{}

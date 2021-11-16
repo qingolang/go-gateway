@@ -36,6 +36,7 @@ func AdminLoginRegister(group *gin.RouterGroup) {
 // @Success 200 {object} middleware.Response{data=dto.AdminLoginOutput} "success"
 // @Router /admin_login/login [post]
 func (adminlogin *AdminLoginController) AdminLogin(c *gin.Context) {
+
 	params := &dto.AdminLoginInput{}
 	if err := params.BindValidParam(c); err != nil {
 		middleware.ResponseError(c, 2000, err)

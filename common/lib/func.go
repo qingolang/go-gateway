@@ -32,11 +32,11 @@ func InitModule(configPath string) {
 // initModule
 func initModule(configPath string, modules []string) {
 	if configPath == "" {
-		log.Println("[PANICA]  config file not exits .")
+		log.Println("[PANICA] config file not exits .")
 		os.Exit(1)
 		return
 	}
-	log.Printf("[INFO]  config=%s\n", configPath)
+	log.Printf(" [INFO] config=%s\n", configPath)
 	// 设置ip信息，优先设置便于日志打印
 	ips := GetLocalIPs()
 	if len(ips) > 0 {
@@ -45,41 +45,41 @@ func initModule(configPath string, modules []string) {
 
 	// 解析配置文件目录
 	if err := ParseConfPath(configPath); err != nil {
-		log.Printf("[ERROR]  error=%v\n", err)
+		log.Printf(" [ERROR] error=%v\n", err)
 		return
 	}
 
 	//初始化配置文件
 	if err := InitViperConf(); err != nil {
-		log.Printf("[ERROR]  error=%v\n", err)
+		log.Printf(" [ERROR] error=%v\n", err)
 		return
 	}
 
 	// 加载base配置
 	if InArrayString("base", modules) {
 		if err := InitBaseConf(GetConfPath("base")); err != nil {
-			log.Printf("[ERROR]  InitBaseConf error=%v\n", err)
+			log.Printf(" [ERROR] InitBaseConf error=%v\n", err)
 		}
 	}
 
 	// 加载redis配置
 	if InArrayString("redis", modules) {
 		if err := InitRedisConf(GetConfPath("redis_map")); err != nil {
-			log.Printf("[ERROR]  InitRedisConf error=%v\n", err)
+			log.Printf(" [ERROR] InitRedisConf error=%v\n", err)
 		}
 	}
 
 	// 加载mysql配置并初始化实例
 	if InArrayString("mysql", modules) {
 		if err := InitDBPool(GetConfPath("mysql_map")); err != nil {
-			log.Printf("[ERROR]  InitDBPool error=%v\n", err)
+			log.Printf(" [ERROR] InitDBPool error=%v\n", err)
 		}
 	}
 
 	// 设置时区
 	location, err := time.LoadLocation(ConfBase.TimeLocation)
 	if err != nil {
-		log.Printf("[ERROR]  time.LoadLocation error=%v\n", err)
+		log.Printf(" [ERROR] time.LoadLocation error=%v\n", err)
 		return
 	}
 	TimeLocation = location
@@ -87,12 +87,12 @@ func initModule(configPath string, modules []string) {
 
 // Destroy 公共销毁函数
 func Destroy() {
-	log.Printf("[INFO]  %s\n", " start destroy resources.")
+	log.Printf(" [INFO] %s\n", "start destroy resources.")
 	// 关闭DB链接
 	CloseDB()
 	// 关闭日志
 	dlog.Close()
-	log.Printf("[INFO]  %s\n", " success destroy resources.")
+	log.Printf(" [INFO] %s\n", "success destroy resources.")
 }
 
 // HTTPGET

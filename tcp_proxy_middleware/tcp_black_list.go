@@ -17,22 +17,27 @@ func TCPBlackListMiddleware() func(c *TcpSliceRouterContext) {
 			return
 		}
 		serviceDetail := serverInterface.(*dao.ServiceDetail)
-		if serviceDetail.AccessControl.OpenAuth != 1 || serviceDetail.AccessControl.WhiteList != "" {
+		if serviceDetail.AccessControl.OpenBlackList != 1 {
 			c.Next()
 			return
 		}
-		blackIpList := []string{}
-		if serviceDetail.AccessControl.BlackList != "" {
-			blackIpList = strings.Split(serviceDetail.AccessControl.BlackList, ",")
-		}
-
 		splits := strings.Split(c.conn.RemoteAddr().String(), ":")
 		clientIP := ""
 		if len(splits) == 2 {
 			clientIP = splits[0]
 		}
-		if len(blackIpList) > 0 {
-			if common.InStringSlice(blackIpList, clientIP) {
+		// 当前IP如果存在于白名单则不校验黑名单
+		if serviceDetail.AccessControl.WhiteList != "" {
+			for _, ipWhite := range strings.Split(serviceDetail.AccessControl.WhiteList, ",") {
+				if clientIP == ipWhite {
+					c.Next()
+					return
+				}
+			}
+		}
+		// 校验黑名单
+		if serviceDetail.AccessControl.BlackList != "" {
+			if common.InStringSlice(strings.Split(serviceDetail.AccessControl.BlackList, ","), clientIP) {
 				c.conn.Write([]byte(fmt.Sprintf("%s in black ip list", clientIP)))
 				c.Abort()
 				return

@@ -17,22 +17,21 @@ func TCPWhiteListMiddleware() func(c *TcpSliceRouterContext) {
 			return
 		}
 		serviceDetail := serverInterface.(*dao.ServiceDetail)
-		if serviceDetail.AccessControl.OpenAuth != 1 {
+		if serviceDetail.AccessControl.OpenWhiteList != 1 {
 			c.Next()
 			return
 		}
+
+		// 取出IP
 		splits := strings.Split(c.conn.RemoteAddr().String(), ":")
 		clientIP := ""
 		if len(splits) == 2 {
 			clientIP = splits[0]
 		}
 
-		iplist := []string{}
+		// 校验白名单
 		if serviceDetail.AccessControl.WhiteList != "" {
-			iplist = strings.Split(serviceDetail.AccessControl.WhiteList, ",")
-		}
-		if len(iplist) > 0 {
-			if !common.InStringSlice(iplist, clientIP) {
+			if !common.InStringSlice(strings.Split(serviceDetail.AccessControl.WhiteList, ","), clientIP) {
 				c.conn.Write([]byte(fmt.Sprintf("%s not in white ip list", clientIP)))
 				c.Abort()
 				return

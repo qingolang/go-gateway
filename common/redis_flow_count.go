@@ -31,7 +31,7 @@ func NewRedisFlowCountService(appID string, interval time.Duration) *RedisFlowCo
 	go func() {
 		defer func() {
 			if err := recover(); err != nil {
-				log.Printf("[ERROR] NewRedisFlowCountService error %v\n", err)
+				log.Printf(" [ERROR] NewRedisFlowCountService error %v\n", err)
 			}
 		}()
 		ticker := time.NewTicker(interval)
@@ -49,13 +49,13 @@ func NewRedisFlowCountService(appID string, interval time.Duration) *RedisFlowCo
 				c.Send("INCRBY", hourKey, tickerCount)
 				c.Send("EXPIRE", hourKey, 86400*2)
 			}); err != nil {
-				log.Printf("[ERROR] RedisConfPipline error %v\n", err)
+				log.Printf(" [ERROR] RedisConfPipline error %v\n", err)
 				continue
 			}
 
 			totalCount, err := reqCounter.GetDayData(currentTime)
 			if err != nil {
-				log.Printf("[ERROR] reqCounter.GetDayData error %v\n", err)
+				log.Printf(" [ERROR] reqCounter.GetDayData error %v\n", err)
 				continue
 			}
 			nowUnix := time.Now().Unix()
@@ -101,7 +101,7 @@ func (o *RedisFlowCountService) Increase() {
 	go func() {
 		defer func() {
 			if err := recover(); err != nil {
-				log.Printf("[ERROR] (o *RedisFlowCountService) Increase() error : %v\n", err)
+				log.Printf(" [ERROR] (o *RedisFlowCountService) Increase() error : %v\n", err)
 			}
 		}()
 		atomic.AddInt64(&o.TickerCount, 1)

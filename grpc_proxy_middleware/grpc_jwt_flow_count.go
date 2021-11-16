@@ -22,7 +22,7 @@ func GRPCJWTFlowCountMiddleware(serviceDetail *dao.ServiceDetail) func(srv inter
 		appInfos := md.Get("app")
 		if len(appInfos) == 0 {
 			if err := handler(srv, ss); err != nil {
-				log.Printf("[ERROR] RPC failed with error %v\n", err)
+				log.Printf(" [ERROR] RPC failed with error %v\n", err)
 				return err
 			}
 			return nil
@@ -41,7 +41,7 @@ func GRPCJWTFlowCountMiddleware(serviceDetail *dao.ServiceDetail) func(srv inter
 			return errors.New(fmt.Sprintf("租户日请求量限流 limit:%v current:%v", appInfo.QPD, appCounter.TotalCount))
 		}
 		if err := handler(srv, ss); err != nil {
-			log.Printf("[ERROR] RPC failed with error %v\n", err)
+			log.Printf(" [ERROR] RPC failed with error %v\n", err)
 			return err
 		}
 		return nil

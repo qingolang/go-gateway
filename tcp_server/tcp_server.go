@@ -103,7 +103,7 @@ func (srv *TcpServer) Serve(l net.Listener) error {
 				return ErrServerClosed
 			default:
 			}
-			log.Printf("[ERROR] accept fail, err: %v\n", e)
+			log.Printf(" [ERROR] accept fail, err: %v\n", e)
 			continue
 		}
 		// 获取一个新链接
