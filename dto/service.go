@@ -25,6 +25,7 @@ type ServiceUpdateHTTPInput struct {
 	UrlRewrite     string `json:"url_rewrite" form:"url_rewrite" comment:"url重写功能" example:"" validate:"valid_url_rewrite"`                //url重写功能
 	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"header转换" example:"" validate:"valid_header_transfor"`   //header转换
 
+	Status            int    `json:"status" form:"status" comment:"状态" example:"" validate:"min=0"`                                                           // 状态
 	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限" example:"" validate:"max=1,min=0"`                                           //关键词
 	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单ip" example:"" validate:""`                                                     //黑名单ip
 	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单ip" example:"" validate:""`                                                     //白名单ip
@@ -70,6 +71,7 @@ type ServiceAddHTTPInput struct {
 	OpenApiWhiteList  int    `json:"open_api_white_list" form:"open_api_white_list" comment:"是否开启api白名单 它依赖于open_auth是否开启JTW校验	" example:"" validate:"min=0"` // 是否开启api白名单 它依赖于open_auth是否开启JTW校验
 	OpenWhiteList     int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"`                                 // 是否开启IP白名单
 	OpenBlackList     int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"`                                 // 是否开启IP黑名单
+	Status            int    `json:"status" form:"status" comment:"状态" example:"" validate:"min=0"`                                                           // 状态
 	ApiWhiteList      string `json:"api_white_list" form:"api_white_list" comment:"api白名单" example:""`                                                        // api白名单
 
 	RoundType              int    `json:"round_type" form:"round_type" comment:"轮询方式" example:"" validate:"max=3,min=0"`                                //轮询方式
@@ -96,6 +98,7 @@ type ServiceListInput struct {
 	Info     string `json:"info" form:"info" comment:"关键词" example:"" validate:""`                      //关键词
 	PageNo   int    `json:"page_no" form:"page_no" comment:"页数" example:"1" validate:"required"`        //页数
 	PageSize int    `json:"page_size" form:"page_size" comment:"每页条数" example:"20" validate:"required"` //每页条数
+	Status   int    `json:"status" form:"status" comment:"状态" example:"-1" `                            //状态
 }
 
 // BindValidParam
@@ -110,6 +113,7 @@ type ServiceListItemOutput struct {
 	ServiceDesc string `json:"service_desc" form:"service_desc"` //服务描述
 	LoadType    int    `json:"load_type" form:"load_type"`       //类型
 	ServiceAddr string `json:"service_addr" form:"service_addr"` //服务地址
+	Status      int    `json:"status" form:"status" `            //状态
 	Qps         int64  `json:"qps" form:"qps"`                   //qps
 	Qpd         int64  `json:"qpd" form:"qpd"`                   //qpd
 	TotalNode   int    `json:"total_node" form:"total_node"`     //节点数
@@ -134,9 +138,10 @@ type ServiceAddGrpcInput struct {
 	Port           int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
 	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"metadata转换" validate:"valid_header_transfor"`
 
+	Status        int    `json:"status" form:"status" comment:"状态" example:"" validate:"min=0"` // 状态
 	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，" validate:"valid_iplist"`
 	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
 	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
 
@@ -161,9 +166,10 @@ type ServiceUpdateGrpcInput struct {
 	Port           int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
 	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"metadata转换" validate:"valid_header_transfor"`
 
+	Status        int    `json:"status" form:"status" comment:"状态" example:"" validate:"min=0"` // 状态
 	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，" validate:"valid_iplist"`
 	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
 	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
 
@@ -187,9 +193,10 @@ type ServiceAddTcpInput struct {
 	Port           int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
 	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"header头转换" validate:""`
 
+	Status        int    `json:"status" form:"status" comment:"状态" example:"" validate:"min=0"` // 状态
 	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，" validate:"valid_iplist"`
 	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
 	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
 
@@ -213,9 +220,10 @@ type ServiceUpdateTcpInput struct {
 	ServiceDesc string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
 	Port        int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
 
+	Status        int    `json:"status" form:"status" comment:"状态" example:"" validate:"min=0"` // 状态
 	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，" validate:"valid_iplist"`
 	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
 	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
 

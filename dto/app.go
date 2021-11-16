@@ -12,6 +12,7 @@ type APPListInput struct {
 	Info     string `json:"info" form:"info" comment:"查找信息" validate:""`
 	PageSize int    `json:"page_size" form:"page_size" comment:"页数" validate:"required,min=1,max=999"`
 	PageNo   int    `json:"page_no" form:"page_no" comment:"页码" validate:"required,min=1,max=999"`
+	Status   int    `json:"status" form:"status" comment:"状态" `
 }
 
 // GetValidParams
@@ -39,6 +40,7 @@ type APPListItemOutput struct {
 	UpdatedAt time.Time `json:"create_at" gorm:"column:create_at" description:"添加时间	"`
 	CreatedAt time.Time `json:"update_at" gorm:"column:update_at" description:"更新时间"`
 	IsDelete  int8      `json:"is_delete" gorm:"column:is_delete" description:"是否已删除；0：否；1：是"`
+	Status    int       `json:"status" form:"status" comment:"状态" `
 }
 
 // APPDetailInput
@@ -65,6 +67,7 @@ type APPAddHttpInput struct {
 	WhiteIPS string `json:"white_ips" form:"white_ips" comment:"ip白名单，支持前缀匹配"`
 	QPD      int64  `json:"qpd" form:"qpd" comment:"日请求量限制" validate:""`
 	QPS      int64  `json:"qps" form:"qps" comment:"每秒请求量限制" validate:""`
+	Status   int8   `json:"status" form:"status" comment:"状态" validate:""`
 }
 
 // GetValidParams
@@ -81,6 +84,7 @@ type APPUpdateHttpInput struct {
 	WhiteIPS string `json:"white_ips" form:"white_ips" gorm:"column:white_ips" comment:"ip白名单，支持前缀匹配		"`
 	QPD      int64  `json:"qpd" form:"qpd" gorm:"column:qpd" comment:"日请求量限制"`
 	QPS      int64  `json:"qps" form:"qps" gorm:"column:qps" comment:"每秒请求量限制"`
+	Status   int8   `json:"status" form:"status" comment:"状态" validate:""`
 }
 
 // GetValidParams

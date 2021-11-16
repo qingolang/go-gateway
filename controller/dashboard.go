@@ -37,13 +37,13 @@ func (service *DashboardController) PanelGroupData(c *gin.Context) {
 		return
 	}
 	serviceInfo := &dao.ServiceInfo{}
-	_, serviceNum, err := serviceInfo.PageList(c, tx, &dto.ServiceListInput{PageSize: 1, PageNo: 1})
+	_, serviceNum, err := serviceInfo.PageList(c, tx, &dto.ServiceListInput{PageSize: 1, PageNo: 1, Status: -1})
 	if err != nil {
 		middleware.ResponseError(c, 2002, err)
 		return
 	}
 	app := &dao.APP{}
-	_, appNum, err := app.APPList(c, tx, &dto.APPListInput{PageNo: 5, PageSize: 1})
+	_, appNum, err := app.APPList(c, tx, &dto.APPListInput{PageNo: 5, PageSize: 1, Status: -1})
 	if err != nil {
 		middleware.ResponseError(c, 2002, err)
 		return

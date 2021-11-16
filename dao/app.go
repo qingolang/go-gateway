@@ -40,6 +40,7 @@ type APP struct {
 	CreatedAt time.Time `json:"create_at" gorm:"column:create_at" description:"添加时间	"`
 	UpdatedAt time.Time `json:"update_at" gorm:"column:update_at" description:"更新时间"`
 	IsDelete  int8      `json:"is_delete" gorm:"column:is_delete" description:"是否已删除；0：否；1：是"`
+	Status    int8      `json:"status" gorm:"column:status" description:"状态；0：禁用；1：启用"`
 }
 
 // TableName
@@ -72,10 +73,13 @@ func (t *APP) APPList(c *gin.Context, tx *gorm.DB, params *dto.APPListInput) ([]
 	//limit offset,pagesize
 	offset := (pageNo - 1) * pageSize
 	query := tx.SetCtx(common.GetGinTraceContext(c))
-	query = query.Table(t.TableName()).Select("`id`,`app_id`,`name`,`secret`,`white_ips`,`qpd`,`qps`,`create_at`,`update_at`,`is_delete`")
+	query = query.Table(t.TableName()).Select("`id`,`app_id`,`name`,`status`,`secret`,`white_ips`,`qpd`,`qps`,`create_at`,`update_at`,`is_delete`")
 	query = query.Where("`is_delete` = ?", 0)
 	if params.Info != "" {
 		query = query.Where(" ( `name` like ? or `app_id` like ?)", "%"+params.Info+"%", "%"+params.Info+"%")
+	}
+	if params.Status != -1 {
+		query = query.Where("`status` = ?", params.Status)
 	}
 	err := query.Limit(pageSize).Offset(offset).Order("`id` desc").Find(&list).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
@@ -112,7 +116,7 @@ func (s *APPManager) LoadOnce() error {
 			s.err = err
 			return
 		}
-		params := &dto.APPListInput{PageNo: 1, PageSize: 99999}
+		params := &dto.APPListInput{PageNo: 1, PageSize: 99999, Status: 1}
 		list, _, err := appInfo.APPList(c, tx, params)
 		if err != nil {
 			s.err = err

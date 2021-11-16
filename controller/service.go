@@ -58,6 +58,7 @@ func (service *ServiceController) ServiceList(c *gin.Context) {
 
 	//从db中分页读取基本信息
 	serviceInfo := &dao.ServiceInfo{}
+	params.Status = -1
 	list, total, err := serviceInfo.PageList(c, tx, params)
 	if err != nil {
 		middleware.ResponseError(c, 2002, err)
@@ -113,6 +114,7 @@ func (service *ServiceController) ServiceList(c *gin.Context) {
 			ServiceAddr: serviceAddr,
 			Qps:         counter.QPS,
 			Qpd:         counter.TotalCount,
+			Status:      int(listItem.Status),
 			TotalNode:   len(iPList),
 		}
 		outList = append(outList, outItem)
@@ -341,6 +343,7 @@ func (service *ServiceController) ServiceAddHTTP(c *gin.Context) {
 	serviceModel := &dao.ServiceInfo{
 		ServiceName: params.ServiceName,
 		ServiceDesc: params.ServiceDesc,
+		Status:      int8(params.Status),
 	}
 	if err := serviceModel.Save(c, tx); err != nil {
 		tx.Rollback()
@@ -445,6 +448,7 @@ func (service *ServiceController) ServiceUpdateHTTP(c *gin.Context) {
 
 	info := serviceDetail.Info
 	info.ServiceDesc = params.ServiceDesc
+	info.Status = int8(params.Status)
 	if err := info.Save(c, tx); err != nil {
 		tx.Rollback()
 		middleware.ResponseError(c, 2005, err)
@@ -550,6 +554,7 @@ func (admin *ServiceController) ServiceAddTcp(c *gin.Context) {
 		LoadType:    common.LoadTypeTCP,
 		ServiceName: params.ServiceName,
 		ServiceDesc: params.ServiceDesc,
+		Status:      int8(params.Status),
 	}
 	if err := info.Save(c, tx); err != nil {
 		tx.Rollback()
@@ -634,6 +639,7 @@ func (admin *ServiceController) ServiceUpdateTcp(c *gin.Context) {
 
 	info := detail.Info
 	info.ServiceDesc = params.ServiceDesc
+	info.Status = int8(params.Status)
 	if err := info.Save(c, tx); err != nil {
 		tx.Rollback()
 		middleware.ResponseError(c, 2003, err)
@@ -742,6 +748,7 @@ func (admin *ServiceController) ServiceAddGrpc(c *gin.Context) {
 		LoadType:    common.LoadTypeGRPC,
 		ServiceName: params.ServiceName,
 		ServiceDesc: params.ServiceDesc,
+		Status:      int8(params.Status),
 	}
 	if err := info.Save(c, tx); err != nil {
 		tx.Rollback()
@@ -828,6 +835,7 @@ func (admin *ServiceController) ServiceUpdateGrpc(c *gin.Context) {
 
 	info := detail.Info
 	info.ServiceDesc = params.ServiceDesc
+	info.Status = int8(params.Status)
 	if err := info.Save(c, tx); err != nil {
 		tx.Rollback()
 		middleware.ResponseError(c, 2004, err)

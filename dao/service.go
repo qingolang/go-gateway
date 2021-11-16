@@ -113,7 +113,7 @@ func (s *ServiceManager) LoadOnce() error {
 			s.err = err
 			return
 		}
-		params := &dto.ServiceListInput{PageNo: 1, PageSize: 99999}
+		params := &dto.ServiceListInput{PageNo: 1, PageSize: 99999, Status: 1}
 		list, _, err := serviceInfo.PageList(c, tx, params)
 		if err != nil {
 			s.err = err

@@ -18,6 +18,7 @@ type ServiceInfo struct {
 	UpdatedAt   time.Time `json:"create_at" gorm:"column:create_at" description:"更新时间"`
 	CreatedAt   time.Time `json:"update_at" gorm:"column:update_at" description:"添加时间"`
 	IsDelete    int8      `json:"is_delete" gorm:"column:is_delete" description:"是否已删除；0：否；1：是"`
+	Status      int8      `json:"status" gorm:"column:status" description:"状态；0：禁用；1：启用"`
 }
 
 // TableName
@@ -92,6 +93,11 @@ func (t *ServiceInfo) PageList(c *gin.Context, tx *gorm.DB, param *dto.ServiceLi
 	if param.Info != "" {
 		query = query.Where("(service_name like ? or service_desc like ?)", "%"+param.Info+"%", "%"+param.Info+"%")
 	}
+
+	if param.Status != -1 {
+		query = query.Where("`status` = ? ", param.Status)
+	}
+
 	if err := query.Limit(param.PageSize).Offset(offset).Order("`id` desc").Find(&list).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return nil, 0, err
 	}

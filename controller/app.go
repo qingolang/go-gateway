@@ -46,6 +46,7 @@ func (admin *APPController) APPList(c *gin.Context) {
 		return
 	}
 	info := &dao.APP{}
+	params.Status = -1
 	list, total, err := info.APPList(c, lib.GORMDefaultPool, params)
 	if err != nil {
 		middleware.ResponseError(c, 2002, err)
@@ -68,6 +69,7 @@ func (admin *APPController) APPList(c *gin.Context) {
 			WhiteIPS: item.WhiteIPS,
 			QPD:      item.QPD,
 			QPS:      item.QPS,
+			Status:   int(item.Status),
 			RealQpd:  appCounter.TotalCount,
 			RealQps:  appCounter.QPS,
 		})
@@ -177,6 +179,7 @@ func (admin *APPController) AppAdd(c *gin.Context) {
 		WhiteIPS: params.WhiteIPS,
 		QPS:      params.QPS,
 		QPD:      params.QPD,
+		Status:   params.Status,
 	}
 	if err := info.Save(c, tx); err != nil {
 		middleware.ResponseError(c, 2003, err)
@@ -217,6 +220,7 @@ func (admin *APPController) AppUpdate(c *gin.Context) {
 	info.WhiteIPS = params.WhiteIPS
 	info.QPS = params.QPS
 	info.QPD = params.QPD
+	info.Status = params.Status
 	if err := info.Save(c, lib.GORMDefaultPool); err != nil {
 		middleware.ResponseError(c, 2003, err)
 		return
