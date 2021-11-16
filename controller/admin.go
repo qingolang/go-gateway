@@ -42,7 +42,7 @@ func (adminlogin *AdminController) AdminInfo(c *gin.Context) {
 		ID:           adminSessionInfo.ID,
 		Name:         adminSessionInfo.UserName,
 		LoginTime:    adminSessionInfo.LoginTime,
-		Avatar:       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+		Avatar:       "",
 		Introduction: "I am a super administrator",
 		Roles:        []string{"admin"},
 	}
