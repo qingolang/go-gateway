@@ -368,6 +368,10 @@ func (service *ServiceController) ServiceAddHTTP(c *gin.Context) {
 		OpenAuth:          params.OpenAuth,
 		BlackList:         params.BlackList,
 		WhiteList:         params.WhiteList,
+		OpenApiWhiteList:  params.OpenApiWhiteList,
+		OpenWhiteList:     params.OpenWhiteList,
+		OpenBlackList:     params.OpenBlackList,
+		ApiWhiteList:      params.ApiWhiteList,
 		ClientIPFlowLimit: params.ClientipFlowLimit,
 		ServiceFlowLimit:  params.ServiceFlowLimit,
 	}
@@ -462,6 +466,10 @@ func (service *ServiceController) ServiceUpdateHTTP(c *gin.Context) {
 	accessControl.OpenAuth = params.OpenAuth
 	accessControl.BlackList = params.BlackList
 	accessControl.WhiteList = params.WhiteList
+	accessControl.OpenApiWhiteList = params.OpenApiWhiteList
+	accessControl.OpenBlackList = params.OpenBlackList
+	accessControl.OpenWhiteList = params.OpenWhiteList
+	accessControl.ApiWhiteList = params.ApiWhiteList
 	accessControl.ClientIPFlowLimit = params.ClientipFlowLimit
 	accessControl.ServiceFlowLimit = params.ServiceFlowLimit
 	if err := accessControl.Save(c, tx); err != nil {
@@ -575,7 +583,8 @@ func (admin *ServiceController) ServiceAddTcp(c *gin.Context) {
 		OpenAuth:          params.OpenAuth,
 		BlackList:         params.BlackList,
 		WhiteList:         params.WhiteList,
-		WhiteHostName:     params.WhiteHostName,
+		OpenWhiteList:     params.OpenWhiteList,
+		OpenBlackList:     params.OpenBlackList,
 		ClientIPFlowLimit: params.ClientIPFlowLimit,
 		ServiceFlowLimit:  params.ServiceFlowLimit,
 	}
@@ -665,7 +674,8 @@ func (admin *ServiceController) ServiceUpdateTcp(c *gin.Context) {
 	accessControl.OpenAuth = params.OpenAuth
 	accessControl.BlackList = params.BlackList
 	accessControl.WhiteList = params.WhiteList
-	accessControl.WhiteHostName = params.WhiteHostName
+	accessControl.OpenWhiteList = params.OpenWhiteList
+	accessControl.OpenBlackList = params.OpenBlackList
 	accessControl.ClientIPFlowLimit = params.ClientIPFlowLimit
 	accessControl.ServiceFlowLimit = params.ServiceFlowLimit
 	if err := accessControl.Save(c, tx); err != nil {
@@ -767,7 +777,8 @@ func (admin *ServiceController) ServiceAddGrpc(c *gin.Context) {
 		OpenAuth:          params.OpenAuth,
 		BlackList:         params.BlackList,
 		WhiteList:         params.WhiteList,
-		WhiteHostName:     params.WhiteHostName,
+		OpenWhiteList:     params.OpenWhiteList,
+		OpenBlackList:     params.OpenBlackList,
 		ClientIPFlowLimit: params.ClientIPFlowLimit,
 		ServiceFlowLimit:  params.ServiceFlowLimit,
 	}
@@ -858,7 +869,8 @@ func (admin *ServiceController) ServiceUpdateGrpc(c *gin.Context) {
 	accessControl.OpenAuth = params.OpenAuth
 	accessControl.BlackList = params.BlackList
 	accessControl.WhiteList = params.WhiteList
-	accessControl.WhiteHostName = params.WhiteHostName
+	accessControl.OpenBlackList = params.OpenBlackList
+	accessControl.OpenWhiteList = params.OpenWhiteList
 	accessControl.ClientIPFlowLimit = params.ClientIPFlowLimit
 	accessControl.ServiceFlowLimit = params.ServiceFlowLimit
 	if err := accessControl.Save(c, tx); err != nil {

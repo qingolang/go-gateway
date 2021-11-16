@@ -25,15 +25,19 @@ type ServiceUpdateHTTPInput struct {
 	UrlRewrite     string `json:"url_rewrite" form:"url_rewrite" comment:"url重写功能" example:"" validate:"valid_url_rewrite"`                //url重写功能
 	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"header转换" example:"" validate:"valid_header_transfor"`   //header转换
 
-	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限" example:"" validate:"max=1,min=0"`                  //关键词
-	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单ip" example:"" validate:""`                            //黑名单ip
-	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单ip" example:"" validate:""`                            //白名单ip
-	ClientipFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端ip限流	" example:"" validate:"min=0"` //客户端ip限流
-	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" example:"" validate:"min=0"`       //服务端限流
+	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限" example:"" validate:"max=1,min=0"`                                           //关键词
+	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单ip" example:"" validate:""`                                                     //黑名单ip
+	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单ip" example:"" validate:""`                                                     //白名单ip
+	ClientipFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端ip限流	" example:"" validate:"min=0"`                           //客户端ip限流
+	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" example:"" validate:"min=0"`                                //服务端限流
+	OpenApiWhiteList  int    `json:"open_api_white_list" form:"open_api_white_list" comment:"是否开启api白名单 它依赖于open_auth是否开启JTW校验	" example:"" validate:"min=0"` // 是否开启api白名单 它依赖于open_auth是否开启JTW校验
+	OpenWhiteList     int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"`                                 // 是否开启IP白名单
+	OpenBlackList     int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"`                                 // 是否开启IP黑名单
+	ApiWhiteList      string `json:"api_white_list" form:"api_white_list" comment:"api白名单" example:""`                                                        // api白名单
 
 	RoundType              int    `json:"round_type" form:"round_type" comment:"轮询方式" example:"" validate:"max=3,min=0"`                                //轮询方式
 	IpList                 string `json:"ip_list" form:"ip_list" comment:"ip列表" example:"127.0.0.1:80" validate:"required,valid_ipportlist"`            //ip列表
-	WeightList             string `json:"weight_list" form:"weight_list" comment:"权重列表" example:"50" validate:"required,valid_weightlist"`             //权重列表
+	WeightList             string `json:"weight_list" form:"weight_list" comment:"权重列表" example:"50" validate:"required,valid_weightlist"`              //权重列表
 	UpstreamConnectTimeout int    `json:"upstream_connect_timeout" form:"upstream_connect_timeout" comment:"建立连接超时, 单位s" example:"" validate:"min=0"`   //建立连接超时, 单位s
 	UpstreamHeaderTimeout  int    `json:"upstream_header_timeout" form:"upstream_header_timeout" comment:"获取header超时, 单位s" example:"" validate:"min=0"` //获取header超时, 单位s
 	UpstreamIdleTimeout    int    `json:"upstream_idle_timeout" form:"upstream_idle_timeout" comment:"链接最大空闲时间, 单位s" example:"" validate:"min=0"`       //链接最大空闲时间, 单位s
@@ -58,15 +62,19 @@ type ServiceAddHTTPInput struct {
 	UrlRewrite     string `json:"url_rewrite" form:"url_rewrite" comment:"url重写功能" example:"" validate:"valid_url_rewrite"`              //url重写功能
 	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"header转换" example:"" validate:"valid_header_transfor"` //header转换
 
-	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限" example:"" validate:"max=1,min=0"`                  //关键词
-	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单ip" example:"" validate:""`                            //黑名单ip
-	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单ip" example:"" validate:""`                            //白名单ip
-	ClientipFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端ip限流	" example:"" validate:"min=0"` //客户端ip限流
-	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" example:"" validate:"min=0"`       //服务端限流
+	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限" example:"" validate:"max=1,min=0"`                                           //关键词
+	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单ip" example:"" validate:""`                                                     //黑名单ip
+	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单ip" example:"" validate:""`                                                     //白名单ip
+	ClientipFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端ip限流	" example:"" validate:"min=0"`                           //客户端ip限流
+	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" example:"" validate:"min=0"`                                //服务端限流
+	OpenApiWhiteList  int    `json:"open_api_white_list" form:"open_api_white_list" comment:"是否开启api白名单 它依赖于open_auth是否开启JTW校验	" example:"" validate:"min=0"` // 是否开启api白名单 它依赖于open_auth是否开启JTW校验
+	OpenWhiteList     int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"`                                 // 是否开启IP白名单
+	OpenBlackList     int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"`                                 // 是否开启IP黑名单
+	ApiWhiteList      string `json:"api_white_list" form:"api_white_list" comment:"api白名单" example:""`                                                        // api白名单
 
 	RoundType              int    `json:"round_type" form:"round_type" comment:"轮询方式" example:"" validate:"max=3,min=0"`                                //轮询方式
 	IpList                 string `json:"ip_list" form:"ip_list" comment:"ip列表" example:"" validate:"required,valid_ipportlist"`                        //ip列表
-	WeightList             string `json:"weight_list" form:"weight_list" comment:"权重列表" example:"" validate:"required,valid_weightlist"`               //权重列表
+	WeightList             string `json:"weight_list" form:"weight_list" comment:"权重列表" example:"" validate:"required,valid_weightlist"`                //权重列表
 	UpstreamConnectTimeout int    `json:"upstream_connect_timeout" form:"upstream_connect_timeout" comment:"建立连接超时, 单位s" example:"" validate:"min=0"`   //建立连接超时, 单位s
 	UpstreamHeaderTimeout  int    `json:"upstream_header_timeout" form:"upstream_header_timeout" comment:"获取header超时, 单位s" example:"" validate:"min=0"` //获取header超时, 单位s
 	UpstreamIdleTimeout    int    `json:"upstream_idle_timeout" form:"upstream_idle_timeout" comment:"链接最大空闲时间, 单位s" example:"" validate:"min=0"`       //链接最大空闲时间, 单位s
@@ -121,14 +129,17 @@ type ServiceStatOutput struct {
 
 // ServiceAddGrpcInput
 type ServiceAddGrpcInput struct {
-	ServiceName       string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
-	ServiceDesc       string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
-	Port              int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
-	HeaderTransfor    string `json:"header_transfor" form:"header_transfor" comment:"metadata转换" validate:"valid_header_transfor"`
-	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteHostName     string `json:"white_host_name" form:"white_host_name" comment:"白名单主机，以逗号间隔" validate:"valid_iplist"`
+	ServiceName    string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
+	ServiceDesc    string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
+	Port           int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
+	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"metadata转换" validate:"valid_header_transfor"`
+
+	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
+	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
+
 	ClientIPFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端IP限流" validate:""`
 	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" validate:""`
 	RoundType         int    `json:"round_type" form:"round_type" comment:"轮询策略" validate:""`
@@ -144,15 +155,18 @@ func (params *ServiceAddGrpcInput) GetValidParams(c *gin.Context) error {
 
 // ServiceUpdateGrpcInput
 type ServiceUpdateGrpcInput struct {
-	ID                int64  `json:"id" form:"id" comment:"服务ID" validate:"required"`
-	ServiceName       string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
-	ServiceDesc       string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
-	Port              int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
-	HeaderTransfor    string `json:"header_transfor" form:"header_transfor" comment:"metadata转换" validate:"valid_header_transfor"`
-	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteHostName     string `json:"white_host_name" form:"white_host_name" comment:"白名单主机，以逗号间隔" validate:"valid_iplist"`
+	ID             int64  `json:"id" form:"id" comment:"服务ID" validate:"required"`
+	ServiceName    string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
+	ServiceDesc    string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
+	Port           int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
+	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"metadata转换" validate:"valid_header_transfor"`
+
+	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
+	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
+
 	ClientIPFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端IP限流" validate:""`
 	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" validate:""`
 	RoundType         int    `json:"round_type" form:"round_type" comment:"轮询策略" validate:""`
@@ -171,12 +185,14 @@ type ServiceAddTcpInput struct {
 	ServiceName    string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
 	ServiceDesc    string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
 	Port           int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
-	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"header头转换" validate:"
-"`
-	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteHostName     string `json:"white_host_name" form:"white_host_name" comment:"白名单主机，以逗号间隔" validate:"valid_iplist"`
+	HeaderTransfor string `json:"header_transfor" form:"header_transfor" comment:"header头转换" validate:""`
+
+	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
+	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
+
 	ClientIPFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端IP限流" validate:""`
 	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" validate:""`
 	RoundType         int    `json:"round_type" form:"round_type" comment:"轮询策略" validate:""`
@@ -192,14 +208,17 @@ func (params *ServiceAddTcpInput) GetValidParams(c *gin.Context) error {
 
 // ServiceUpdateTcpInput
 type ServiceUpdateTcpInput struct {
-	ID                int64  `json:"id" form:"id" comment:"服务ID" validate:"required"`
-	ServiceName       string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
-	ServiceDesc       string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
-	Port              int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
-	OpenAuth          int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
-	BlackList         string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteList         string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
-	WhiteHostName     string `json:"white_host_name" form:"white_host_name" comment:"白名单主机，以逗号间隔" validate:"valid_iplist"`
+	ID          int64  `json:"id" form:"id" comment:"服务ID" validate:"required"`
+	ServiceName string `json:"service_name" form:"service_name" comment:"服务名称" validate:"required,valid_service_name"`
+	ServiceDesc string `json:"service_desc" form:"service_desc" comment:"服务描述" validate:"required"`
+	Port        int    `json:"port" form:"port" comment:"端口，需要设置8001-8999范围内" validate:"required,min=8001,max=8999"`
+
+	OpenAuth      int    `json:"open_auth" form:"open_auth" comment:"是否开启权限验证" validate:""`
+	BlackList     string `json:"black_list" form:"black_list" comment:"黑名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	WhiteList     string `json:"white_list" form:"white_list" comment:"白名单IP，以逗号间隔，白名单优先级高于黑名单" validate:"valid_iplist"`
+	OpenWhiteList int    `json:"open_white_list" form:"open_white_list" comment:" 是否开启IP白名单" example:"" validate:"min=0"` // 是否开启IP白名单
+	OpenBlackList int    `json:"open_black_list" form:"open_black_list" comment:" 是否开启IP黑名单" example:"" validate:"min=0"` // 是否开启IP黑名单
+
 	ClientIPFlowLimit int    `json:"clientip_flow_limit" form:"clientip_flow_limit" comment:"客户端IP限流" validate:""`
 	ServiceFlowLimit  int    `json:"service_flow_limit" form:"service_flow_limit" comment:"服务端限流" validate:""`
 	RoundType         int    `json:"round_type" form:"round_type" comment:"轮询策略" validate:""`
