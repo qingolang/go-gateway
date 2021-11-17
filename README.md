@@ -45,13 +45,13 @@
   
 ## 三、代理设计
 
-  - **HTTP**
+  - **HTTP代理设计**
     ![avatar](./readme_static/net/httpproxy1.png)
     ![avatar](./readme_static/net/httpproxy2.png)
-  - **TCP**
+  - **TCP代理设计**
     ![avatar](./readme_static/net/tcpproxy1.png)
     ![avatar](./readme_static/net/tcpproxy2.png)
-  - **GRPC**
+  - **GRPC代理设计**
     ![avatar](./readme_static/net/grpcproxy1.png)
     ![avatar](./readme_static/net/grpcproxy2.png)
 
