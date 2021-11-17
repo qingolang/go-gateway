@@ -6,7 +6,7 @@
   - [三、代理设计](#三代理设计)
   - [四、运行](#四运行)
   - [五、部署](#五部署)
-  - [六、后续](#六后续)
+  - [六、后台](#六后台)
   - [七、网络基础](#七网络基础)
 
 ## 一、简介
@@ -81,9 +81,12 @@
 
 等会...
 
-## 六、后续
+## 六、后台
 
-等会...
+![avatar](./readme_static/dashboard1.png)
+![avatar](./readme_static/dashboard2.png)
+![avatar](./readme_static/dashboard3.png)
+![avatar](./readme_static/dashboard4.png)
 
 ## 七、网络基础
   - **OSI七层网络协议**
