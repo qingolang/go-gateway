@@ -3,11 +3,11 @@
 - [Go 微服务网关](#go-微服务网关)
   - [一、简介](#一简介)
   - [二、功能清单](#二功能清单)
-  - [三、网络基础](#三网络基础)
-  - [四、代理设计](#四代理设计)
-  - [五、运行](#五运行)
-  - [六、部署](#六部署)
-  - [七、后续](#七后续)
+  - [三、代理设计](#三代理设计)
+  - [四、运行](#四运行)
+  - [五、部署](#五部署)
+  - [六、后续](#六后续)
+  - [七、网络基础](#七网络基础)
 
 ## 一、简介
 在微服务架构中网关是一个不可或缺的角色，其重要性不言而喻 所以就不多说了
@@ -42,8 +42,50 @@
     - JWT租户
     ![avatar](./readme_static/net/jwt.png)
     - API白名单(HTTP)
+  
+## 三、代理设计
+  - **HTTP**
+  ![avatar](./readme_static/net/httpproxy1.png)
+  ![avatar](./readme_static/net/httpproxy2.png)
+  - **TCP**
+  ![avatar](./readme_static/net/tcpproxy1.png)
+  ![avatar](./readme_static/net/tcpproxy2.png)
+  - **GRPC**
+  ![avatar](./readme_static/net/grpcproxy1.png)
+  ![avatar](./readme_static/net/grpcproxy2.png)
 
-## 三、网络基础
+## 四、运行
+  
+  确保本地环境安装了Go 1.16+版本 nodejs(v11.9.0)
+
+  - **运行后端代理服务**
+    - git clone https://github.com/qingolang/go-gateway
+    - cd go-gateway
+    - export GO111MODULE=on && export GOPROXY=https://goproxy.cn
+    - go mod tidy
+    - go run main.go -config=./conf/dev/ -endpoint=proxy
+  - **运行后端面板服务**
+    - git clone https://github.com/qingolang/go-gateway
+    - cd go-gateway
+    - export GO111MODULE=on && export GOPROXY=https://goproxy.cn
+    - go mod tidy
+    - go run main.go -config=./conf/dev/ -endpoint=dashboard
+  - **运行前端**
+    - git clone https://github.com/qingolang/go-gateway-view
+    - cd go-gateway-view
+    - npm install -g cnpm --registry=https://registry.npm.taobao.org
+    - cnpm install
+    - npm run dev 
+
+## 五、部署
+
+等会...
+
+## 六、后续
+
+等会...
+
+## 七、网络基础
   - **OSI七层网络协议**
   ![avatar](./readme_static/net/osi.png)
   - **TCP数据包构成**
@@ -60,45 +102,3 @@
   - **GRPC抓包分析**
   ![avatar](./readme_static/net/grpcrequest.png)
   ![avatar](./readme_static/net/grpcrespones.png)
-  
-## 四、代理设计
-  - **HTTP**
-  ![avatar](./readme_static/net/httpproxy1.png)
-  ![avatar](./readme_static/net/httpproxy2.png)
-  - **TCP**
-  ![avatar](./readme_static/net/tcpproxy1.png)
-  ![avatar](./readme_static/net/tcpproxy2.png)
-  - **GRPC**
-  ![avatar](./readme_static/net/grpcproxy1.png)
-  ![avatar](./readme_static/net/grpcproxy2.png)
-
-## 五、运行
-  
-  确保本地环境安装了Go 1.16+版本 nodejs(v11.9.0)
-
-  - **运行后端代理服务**
-    1. git clone https://github.com/qingolang/go-gateway
-    2. cd go-gateway
-    3. export GO111MODULE=on && export GOPROXY=https://goproxy.cn
-    4. go mod tidy
-    5. go run main.go -config=./conf/dev/ -endpoint=proxy
-  - **运行后端面板服务**
-    1. git clone https://github.com/qingolang/go-gateway
-    2. cd go-gateway
-    3. export GO111MODULE=on && export GOPROXY=https://goproxy.cn
-    4. go mod tidy
-    5. go run main.go -config=./conf/dev/ -endpoint=dashboard
-  - **运行前端**
-    1. git clone https://github.com/qingolang/go-gateway-view
-    2. cd go-gateway-view
-    3. npm install -g cnpm --registry=https://registry.npm.taobao.org
-    4. cnpm install
-    5. npm run dev 
-
-## 六、部署
-
-等会...
-
-## 七、后续
-
-等会...
